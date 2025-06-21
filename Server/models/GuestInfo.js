@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const guestInfoSchema = new mongoose.Schema({
   email: {
@@ -29,4 +29,5 @@ const guestInfoSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("GuestInfo", guestInfoSchema); 
+const GuestInfo = mongoose.model("GuestInfo", guestInfoSchema);
+export default GuestInfo; 

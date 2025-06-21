@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -39,4 +39,4 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+export default authMiddleware;

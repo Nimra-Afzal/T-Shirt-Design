@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 // Create API instances
-const API = axios.create({ baseURL: 'http://localhost:5000/api' });
-const AUTH_API = axios.create({ baseURL: 'http://localhost:5000/api/auth' });
+const API = axios.create({ baseURL: 'http://localhost:5001/api' });
+const AUTH_API = axios.create({ baseURL: 'http://localhost:5001/api/auth' });
 
 // Add request interceptors
 const requestInterceptor = (config) => {

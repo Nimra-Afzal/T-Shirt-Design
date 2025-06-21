@@ -69,13 +69,13 @@ const SizeSelector = ({ onClose, onNext }) => {
         <div className="mt-6 flex justify-end space-x-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+            className="px-4 py-2 border border-[#00A8A8] text-[#00A8A8] rounded-lg hover:bg-[#00A8A8] hover:text-white transition-all duration-300"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+            className="px-4 py-2 bg-[#00A8A8] text-white rounded-lg hover:bg-[#009494] transition-all duration-300"
           >
             Next
           </button>

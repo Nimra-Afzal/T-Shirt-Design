@@ -1,7 +1,7 @@
-const express = require("express");
-const Order = require("../models/Order");
-const User = require("../models/User");
-const adminMiddleware = require("../middlewares/adminMiddleware");
+import express from "express";
+import Order from "../models/Order.js";
+import User from "../models/User.js";
+import adminMiddleware from "../middlewares/adminMiddleware.js";
 const router = express.Router();
 
 // Get all orders with pagination and filtering
@@ -122,4 +122,4 @@ router.get("/users", adminMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router; 
+export default router; 

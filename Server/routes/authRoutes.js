@@ -1,10 +1,10 @@
-const express = require("express");
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const crypto = require('crypto');
-const nodemailer = require('nodemailer');
-const authMiddleware = require("../middlewares/authMiddleware");
+import express from "express";
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+import crypto from 'crypto';
+import nodemailer from 'nodemailer';
+import authMiddleware from "../middlewares/authMiddleware.js";
 
 dotenv.config(); // Load environment variables
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -31,7 +31,10 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+    
     const user = await User.findOne({ email });
+    console.log("user info --------- ",user)
+    console.log("user info --------- end")
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const isMatch = await user.comparePassword(password);
@@ -212,4 +215,4 @@ router.put("/update-profile", authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

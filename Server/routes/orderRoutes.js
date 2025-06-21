@@ -1,8 +1,8 @@
-const express = require("express");
-const Order = require("../models/Order");
-const GuestInfo = require("../models/GuestInfo");
-const nodemailer = require("nodemailer");
-const authMiddleware = require("../middlewares/authMiddleware");
+import express from "express";
+import Order from "../models/Order.js";
+import GuestInfo from "../models/GuestInfo.js";
+import nodemailer from "nodemailer";
+import authMiddleware from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 // Generate order number
@@ -177,4 +177,4 @@ router.get("/orders/:orderNumber", authMiddleware, async (req, res) => {
   }
 });
 
-module.exports = router; 
+export default router; 

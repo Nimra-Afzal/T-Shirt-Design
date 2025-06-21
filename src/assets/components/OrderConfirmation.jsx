@@ -27,7 +27,7 @@ const OrderConfirmation = ({ orderNumber, onBackToHome }) => {
           </div>
           <button
             onClick={onBackToHome}
-            className="w-full p-3 bg-black text-white rounded-lg hover:bg-gray-800 mt-4"
+            className="w-full p-3 bg-[#00A8A8] text-white rounded-lg hover:bg-[#009494] mt-4"
           >
             Back to Home
           </button>

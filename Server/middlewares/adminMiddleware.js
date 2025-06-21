@@ -1,6 +1,6 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const dotenv = require('dotenv');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+import dotenv from 'dotenv';
 
 dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -35,4 +35,4 @@ const adminMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = adminMiddleware; 
+export default adminMiddleware; 

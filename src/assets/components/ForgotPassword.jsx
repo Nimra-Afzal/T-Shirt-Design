@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { AUTH_API } from '../../Api';
+import Logo from './Logo';
 
 const forgotPasswordSchema = Yup.object().shape({
   email: Yup.string()
@@ -38,28 +39,43 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="flex h-screen justify-center items-center bg-black">
-      <div className="w-full max-w-md p-8 bg-white/80 rounded-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center">Forgot Password</h2>
+    <div className="min-h-screen flex items-center justify-center" style={{
+      backgroundImage: 'url("./Pattern-07.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      <div className="absolute top-8 left-8">
+        <Logo />
+      </div>
+      <div className="p-8 px-24 mt-20 rounded-lg shadow-lg w-[800px] bg-white/20 backdrop-blur-sm">
+        <h2 className="text-4xl text-center font-bold mb-8">Forgot Password</h2>
+        <p className="text-gray-600 text-center mb-8">
+          Enter your email address and we'll send you a link to reset your password.
+        </p>
         <Formik
           initialValues={{ email: '' }}
           validationSchema={forgotPasswordSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="space-y-4">
+            <Form className="space-y-6">
               <div>
                 <Field
                   type="email"
                   name="email"
                   placeholder="Enter your email"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="w-full p-4 border border-gray-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
                 />
-                <ErrorMessage name="email" component="div" className="text-red-500 mt-1" />
+                <ErrorMessage name="email" component="div" className="text-red-500 mt-2 text-sm" />
               </div>
               
               {status.message && (
-                <div className={`text-center ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                <div className={`p-4 rounded-xl text-center ${
+                  status.type === 'success' 
+                    ? 'bg-green-50 text-green-600' 
+                    : 'bg-red-50 text-red-500'
+                }`}>
                   {status.message}
                 </div>
               )}
@@ -67,19 +83,22 @@ const ForgotPassword = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full p-3 bg-black text-white rounded-lg hover:bg-gray-800 disabled:opacity-50"
+                className="w-full p-4 btn-primary disabled:opacity-50"
               >
                 {isSubmitting ? 'Sending...' : 'Send Reset Link'}
               </button>
-
-              <div className="text-center mt-4">
-                <Link to="/login" className="text-blue-500 hover:underline">
-                  Back to Login
-                </Link>
-              </div>
             </Form>
           )}
         </Formik>
+
+        <div className="mt-6 text-center">
+          <Link 
+            to="/login" 
+            className="block text-black hover:text-gray-700 transition-colors"
+          >
+            Back to Login
+          </Link>
+        </div>
       </div>
     </div>
   );

@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AUTH_API } from '../../Api';
+import Logo from './Logo';
 
 const resetPasswordSchema = Yup.object().shape({
   password: Yup.string()
@@ -39,24 +40,35 @@ const ResetPassword = () => {
   };
 
   return (
-    <div className="flex h-screen justify-center items-center bg-black">
-      <div className="w-full max-w-md p-8 bg-white/80 rounded-lg">
-        <h2 className="text-3xl font-bold mb-6 text-center">Reset Password</h2>
+    <div className="min-h-screen flex items-center justify-center" style={{
+      backgroundImage: 'url("./Pattern-07.png")',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      <div className="absolute top-8 left-8">
+        <Logo />
+      </div>
+      <div className="p-8 px-24 mt-20 rounded-lg shadow-lg w-[800px] bg-white/20 backdrop-blur-sm">
+        <h2 className="text-4xl font-bold mb-8">Reset Password</h2>
+        <p className="text-gray-600 mb-8">
+          Please enter your new password below.
+        </p>
         <Formik
           initialValues={{ password: '', confirmPassword: '' }}
           validationSchema={resetPasswordSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="space-y-4">
+            <Form className="space-y-6">
               <div>
                 <Field
                   type="password"
                   name="password"
                   placeholder="New Password"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="w-full p-4 border border-gray-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
                 />
-                <ErrorMessage name="password" component="div" className="text-red-500 mt-1" />
+                <ErrorMessage name="password" component="div" className="text-red-500 mt-2 text-sm" />
               </div>
 
               <div>
@@ -64,13 +76,17 @@ const ResetPassword = () => {
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
-                  className="w-full p-3 border border-gray-300 rounded-lg"
+                  className="w-full p-4 border border-gray-200 rounded-xl bg-white/50 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
                 />
-                <ErrorMessage name="confirmPassword" component="div" className="text-red-500 mt-1" />
+                <ErrorMessage name="confirmPassword" component="div" className="text-red-500 mt-2 text-sm" />
               </div>
 
               {status.message && (
-                <div className={`text-center ${status.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                <div className={`p-4 rounded-xl text-center ${
+                  status.type === 'success' 
+                    ? 'bg-green-50 text-green-600' 
+                    : 'bg-red-50 text-red-500'
+                }`}>
                   {status.message}
                 </div>
               )}
@@ -78,7 +94,7 @@ const ResetPassword = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full p-3 bg-black text-white rounded-lg hover:bg-gray-800 disabled:opacity-50"
+                className="w-full p-4 btn-primary disabled:opacity-50"
               >
                 {isSubmitting ? 'Resetting...' : 'Reset Password'}
               </button>

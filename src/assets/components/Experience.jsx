@@ -11,14 +11,18 @@ import Settings from './Settings';
 import { FaCog } from 'react-icons/fa';
 import SizeSelector from './SizeSelector';
 import Checkout from './Checkout';
+import Logo from './Logo';
 
 const Experience = ({ setToken }) => {
   const navigate = useNavigate();
   const model = useLoader(GLTFLoader, './burger_box.glb');
 
-  const pattern1 = useLoader(TextureLoader, './Pattern-01.jpg');
+  const pattern1 = useLoader(TextureLoader, './pattern-07.jpg');
   const pattern2 = useLoader(TextureLoader, './Pattern-02.jpg');
-  const pattern3 = useLoader(TextureLoader, './pattern-07.jpg');
+  const pattern3 = useLoader(TextureLoader, './Pattern-03.jpg');
+  const pattern4 = useLoader(TextureLoader, './Pattern-04.jpg');
+  const pattern5 = useLoader(TextureLoader, './Pattern-05.jpg');
+  const pattern6 = useLoader(TextureLoader, './Pattern-06.jpg');
 
   // Pattern states
   const [selectedPattern, setSelectedPattern] = useState(null);
@@ -43,6 +47,8 @@ const Experience = ({ setToken }) => {
   const [showCheckout, setShowCheckout] = useState(false);
   const [sizeData, setSizeData] = useState(null);
   const [designImage, setDesignImage] = useState(null);
+  const [isPatternMenuVisible, setIsPatternMenuVisible] = useState(true);
+  const [isLogoMenuVisible, setIsLogoMenuVisible] = useState(true);
 
   const resetValues = () => {
     setRepeatX(2);
@@ -77,6 +83,8 @@ const Experience = ({ setToken }) => {
       reader.readAsDataURL(file);
     }
   };
+   
+  
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -126,18 +134,23 @@ const Experience = ({ setToken }) => {
 
   return (
     <>
+      {/* Logo */}
+      <div className="absolute top-8 left-1/2 transform -translate-x-1/2 z-50">
+        <Logo />
+      </div>
+
       {/* Top Bar */}
       <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
         <button
           onClick={() => setShowSettings(true)}
-          className="bg-black text-white p-2 rounded-lg hover:bg-gray-800"
+          className="bg-[#00A8A8] text-white p-2 rounded-lg hover:bg-[#009494]"
           title="Settings"
         >
           <FaCog size={20} />
         </button>
         <button
           onClick={handleLogout}
-          className="bg-black text-white p-2 px-3 rounded-lg hover:bg-red-600"
+          className="bg-[#00A8A8] text-white p-2 px-3 rounded-lg hover:bg-[#009494]"
         >
           Logout
         </button>
@@ -147,7 +160,7 @@ const Experience = ({ setToken }) => {
       <div className="absolute bottom-4 right-4 z-50">
         <button
           onClick={() => setShowSizeSelector(true)}
-          className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800"
+          className="bg-[#00A8A8] text-white px-6 py-3 rounded-lg hover:bg-[#009494]"
         >
           Next
         </button>
@@ -180,6 +193,9 @@ const Experience = ({ setToken }) => {
         pattern1={pattern1}
         pattern2={pattern2}
         pattern3={pattern3}
+        pattern4={pattern4}
+        pattern5={pattern5}
+        pattern6={pattern6}
         repeatX={repeatX}
         setRepeatX={setRepeatX}
         repeatY={repeatY}
@@ -192,6 +208,8 @@ const Experience = ({ setToken }) => {
         handleImageUpload={handleImageUpload}
         selectedColor={selectedColor}
         setSelectedColor={setSelectedColor}
+        isMenuVisible={isPatternMenuVisible}
+        setIsMenuVisible={setIsPatternMenuVisible}
       />
 
       <LogoMenu
@@ -204,9 +222,19 @@ const Experience = ({ setToken }) => {
         handleLogoUpload={handleLogoUpload}
         selectedLogo={selectedLogo}
         setSelectedLogo={setSelectedLogo}
+        isMenuVisible={isLogoMenuVisible}
+        setIsMenuVisible={setIsLogoMenuVisible}
       />
 
-      <Canvas className="bg-[#000000dc]">
+      <Canvas 
+        className="bg-[#D9D7D7]"
+        style={{
+          backgroundImage: 'url("./Pattern-07.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
         <Stage environment={null} intensity={1} preset="rembrandt" shadows>
           <group>
             <mesh
@@ -228,9 +256,10 @@ const Experience = ({ setToken }) => {
               )}
             </mesh>
           </group>
+          <pointLight position={[0, 0, -5]} intensity={50} color="#ffffff" />
         </Stage>
         <OrbitControls />
-        <Environment preset="city" backgroundBlurriness={10} background={false} />
+        <Environment preset="city" backgroundBlurriness={1} background={false} />
       </Canvas>
     </>
   );

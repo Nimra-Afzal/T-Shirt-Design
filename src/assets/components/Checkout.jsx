@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import API, { AUTH_API } from '../../Api';
 import OrderConfirmation from './OrderConfirmation';
+import Experience from './Experience';
 import { useNavigate } from 'react-router-dom';
 
 const checkoutSchema = Yup.object().shape({
@@ -22,6 +23,7 @@ const Checkout = ({ onClose, sizeData, designImage }) => {
   const [error, setError] = useState('');
   const [userInfo, setUserInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [showPreview, setShowPreview] = useState(false);
   const navigate = useNavigate();
 
   const totalItems = Object.values(sizeData).reduce((sum, num) => sum + Number(num), 0);
@@ -131,7 +133,7 @@ const Checkout = ({ onClose, sizeData, designImage }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-lg p-8 max-w-7xl w-full max-h-[90vh] overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Checkout</h2>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700">✕</button>
@@ -147,29 +149,54 @@ const Checkout = ({ onClose, sizeData, designImage }) => {
           {/* Left side - Order Summary */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <img 
-                src={designImage} 
-                alt="Design Preview" 
-                className="w-full h-48 object-contain mb-4"
-              />
-              <div className="space-y-2">
-                {Object.entries(sizeData).map(([size, quantity]) => 
-                  quantity > 0 && (
-                    <div key={size} className="flex justify-between">
-                      <span className="capitalize">{size}:</span>
-                      <span>{quantity}</span>
-                    </div>
-                  )
-                )}
-                <div className="border-t pt-2 mt-2">
-                  <div className="flex justify-between font-semibold">
-                    <span>Total Items:</span>
-                    <span>{totalItems}</span>
+            <div className="bg-gray-100 p-6 rounded-lg">
+              <div className="space-y-6">
+                {/* Size Breakdown */}
+                <div>
+                  <h4 className="font-semibold mb-3">Size Breakdown</h4>
+                  <div className="grid grid-cols-2 gap-4">
+                    {Object.entries(sizeData).map(([size, quantity]) => 
+                      quantity > 0 && (
+                        <div key={size} className="bg-white p-3 rounded-lg shadow-sm">
+                          <div className="flex justify-between items-center">
+                            <span className="capitalize font-medium">{size}</span>
+                            <span className="text-gray-600">x{quantity}</span>
+                          </div>
+                          <div className="text-sm text-gray-500 mt-1">
+                            ${(quantity * 25).toFixed(2)}
+                          </div>
+                        </div>
+                      )
+                    )}
                   </div>
-                  <div className="flex justify-between font-semibold">
-                    <span>Total Price:</span>
-                    <span>${totalPrice}</span>
+                </div>
+
+                {/* Price Summary */}
+                <div className="border-t pt-4">
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Subtotal</span>
+                      <span>${totalPrice.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Shipping</span>
+                      <span>Free</span>
+                    </div>
+                    <div className="border-t pt-2 mt-2">
+                      <div className="flex justify-between font-semibold text-lg">
+                        <span>Total</span>
+                        <span>${totalPrice.toFixed(2)}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Order Info */}
+                <div className="bg-white p-4 rounded-lg shadow-sm">
+                  <h4 className="font-semibold mb-2">Order Information</h4>
+                  <div className="space-y-2 text-sm">
+                    <p className="text-gray-600">Estimated Delivery: 5-7 business days</p>
+                    <p className="text-gray-600">Payment Method: Cash on Delivery</p>
                   </div>
                 </div>
               </div>
@@ -252,7 +279,7 @@ const Checkout = ({ onClose, sizeData, designImage }) => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full p-3 bg-black text-white rounded-lg hover:bg-gray-800 disabled:opacity-50"
+                    className="w-full p-3 bg-[#00A8A8] text-white rounded-lg hover:bg-[#009494] disabled:opacity-50"
                   >
                     {isSubmitting ? 'Processing...' : 'Place Order'}
                   </button>
